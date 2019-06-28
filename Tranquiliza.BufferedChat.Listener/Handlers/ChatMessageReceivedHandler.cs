@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Tranquiliza.BufferedChat.Listener.Services;
+using Tranquiliza.BufferedChat.Core;
 using Tranquiliza.BufferedChat.Listener.Twitch;
 
 namespace Tranquiliza.BufferedChat.Listener.Handlers
@@ -12,17 +12,18 @@ namespace Tranquiliza.BufferedChat.Listener.Handlers
     public class ChatMessageReceivedHandler : INotificationHandler<MessageReceivedEvent>
     {
         private readonly IChatMessageService _chatMessageService;
+        private readonly IChatEventTranslator _chatEventTranslator;
 
-        public ChatMessageReceivedHandler(IChatMessageService chatMessageService)
+        public ChatMessageReceivedHandler(IChatMessageService chatMessageService, IChatEventTranslator chatEventTranslator)
         {
             _chatMessageService = chatMessageService;
+            _chatEventTranslator = chatEventTranslator;
         }
 
         public async Task Handle(MessageReceivedEvent notification, CancellationToken cancellationToken)
         {
-            await _chatMessageService.CreateAndSaveMessage(notification).ConfigureAwait(false);
-
-
+            var message = _chatEventTranslator.Translate(notification);
+            await _chatMessageService.CreateAndSaveMessage(message).ConfigureAwait(false);
         }
     }
 }

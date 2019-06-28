@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using Tranquiliza.BufferedChat.Core;
 
-namespace Tranquiliza.BufferedChat.Listener
+namespace Tranquiliza.BufferedChat.Core
 {
     public interface IMessageRepository
     {

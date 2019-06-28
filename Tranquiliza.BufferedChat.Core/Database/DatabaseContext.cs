@@ -2,9 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Tranquiliza.BufferedChat.Core;
 
-namespace Tranquiliza.BufferedChat.Listener
+namespace Tranquiliza.BufferedChat.Core
 {
     public class DatabaseContext : DbContext
     {

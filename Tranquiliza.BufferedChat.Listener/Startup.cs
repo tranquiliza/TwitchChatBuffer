@@ -7,6 +7,7 @@ using Tranquiliza.BufferedChat.Listener.Twitch;
 using Scrutor;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Tranquiliza.BufferedChat.Core;
 
 namespace Tranquiliza.BufferedChat.Listener
 {
@@ -42,7 +43,7 @@ namespace Tranquiliza.BufferedChat.Listener
             //This must be last!
             services.AddScoped<ServiceFactory>(p => p.GetService);
             services.Scan(scan => scan
-                .FromAssembliesOf(typeof(IMediator), typeof(Program))
+                .FromAssembliesOf(typeof(IMediator), typeof(Program), typeof(IDateTimeProvider))
                 .AddClasses()
                 .UsingRegistrationStrategy(RegistrationStrategy.Skip)
                 .AsImplementedInterfaces());

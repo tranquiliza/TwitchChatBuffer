@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tranquiliza.BufferedChat.Listener.Services
+namespace Tranquiliza.BufferedChat.Core
 {
     public interface IDateTimeProvider
     {

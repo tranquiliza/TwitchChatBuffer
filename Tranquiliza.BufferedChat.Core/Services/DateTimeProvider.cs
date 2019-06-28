@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tranquiliza.BufferedChat.Listener.Services
+namespace Tranquiliza.BufferedChat.Core
 {
     public class DateTimeProvider : IDateTimeProvider
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Tranquiliza.BufferedChat.Listener.Migrations
+namespace Tranquiliza.BufferedChat.Core.Migrations
 {
     public partial class Initial : Migration
     {
