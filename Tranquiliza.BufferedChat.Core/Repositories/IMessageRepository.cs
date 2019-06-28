@@ -9,5 +9,6 @@ namespace Tranquiliza.BufferedChat.Core
     {
         Task SaveChanges();
         Task AddMessage(ChatMessage chatMessage);
+        Task<IEnumerable<ChatMessage>> GetLatestMessages(string channelName, int pageSize);
     }
 }

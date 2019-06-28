@@ -19,5 +19,10 @@ namespace Tranquiliza.BufferedChat.Core
             await _messageRepository.AddMessage(message).ConfigureAwait(false);
             await _messageRepository.SaveChanges().ConfigureAwait(false);
         }
+
+        public async Task<IEnumerable<ChatMessage>> GetLatestMessages(string channelName, int pageSize)
+        {
+            return await _messageRepository.GetLatestMessages(channelName, pageSize).ConfigureAwait(false);
+        }
     }
 }
