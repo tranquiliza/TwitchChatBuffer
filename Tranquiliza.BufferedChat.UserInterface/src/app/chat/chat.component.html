@@ -1,0 +1,3 @@
+<div *ngFor='let message of messages'>
+    <span [ngStyle]='{ "color": message.userColorHex }'>{{message.displayName}}:</span> {{message.message}} - {{message.emoteReplacedMessage}}
+</div>

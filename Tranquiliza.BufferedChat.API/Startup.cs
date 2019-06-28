@@ -29,12 +29,21 @@ namespace Tranquiliza.BufferedChat.API
             Configuration = builder.Build();
         }
 
+        private readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var botSettings = Configuration.GetSection("ChatbotClient");
-            var botName = botSettings.GetValue<string>("BotUserName");
-            var botOAuthToken = botSettings.GetValue<string>("BotOAuthToken");
+            services.AddCors(options =>
+            {
+                options.AddPolicy(_myAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.AllowAnyOrigin()
+                           .AllowAnyHeader()
+                           .AllowAnyMethod();
+                });
+            });
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
@@ -64,7 +73,7 @@ namespace Tranquiliza.BufferedChat.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseCors(_myAllowSpecificOrigins);
             app.UseHttpsRedirection();
             app.UseMvc();
         }
