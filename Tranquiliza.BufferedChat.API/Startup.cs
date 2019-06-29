@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Scrutor;
+using System.Linq;
 using Tranquiliza.BufferedChat.Core;
 
 namespace Tranquiliza.BufferedChat.API
@@ -47,8 +41,6 @@ namespace Tranquiliza.BufferedChat.API
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
-
-            //Per Server
 
             //This must be last!
             services.AddScoped<ServiceFactory>(p => p.GetService);

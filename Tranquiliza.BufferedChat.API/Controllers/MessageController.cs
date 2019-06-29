@@ -45,10 +45,21 @@ namespace Tranquiliza.BufferedChat.API.Controllers
         }
 
         [Route("")]
+        [HttpGet]
         public async Task<IActionResult> Messages(string channelName, int pageSize = 20)
         {
             var result = await _chatMessageService.GetLatestMessages(channelName, pageSize).ConfigureAwait(false);
             return Ok(result.Select(ChatMessageContract.Create));
+        }
+
+        [Route("")]
+        [HttpPost]
+        public async Task<IActionResult> AddMessage([FromBody]ChatMessage chatMessage)
+        {
+            if (chatMessage == null)
+                throw new ArgumentNullException(nameof(chatMessage));
+
+            return Ok();
         }
     }
 }
