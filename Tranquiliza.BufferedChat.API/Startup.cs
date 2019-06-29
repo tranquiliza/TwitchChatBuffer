@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Scrutor;
 using System.Linq;
+using Tranquiliza.BufferedChat.API.Hubs;
 using Tranquiliza.BufferedChat.Core;
 
 namespace Tranquiliza.BufferedChat.API
@@ -33,14 +35,17 @@ namespace Tranquiliza.BufferedChat.API
                 options.AddPolicy(_myAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.AllowAnyOrigin()
+                    builder.WithOrigins("http://localhost:4200")
                            .AllowAnyHeader()
-                           .AllowAnyMethod();
+                           .AllowAnyMethod()
+                           .AllowCredentials();
                 });
             });
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+
+            services.AddSignalR();
 
             //This must be last!
             services.AddScoped<ServiceFactory>(p => p.GetService);
@@ -65,7 +70,10 @@ namespace Tranquiliza.BufferedChat.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseCors(_myAllowSpecificOrigins);
+
+            app.UseSignalR(route => route.MapHub<MessageHub>("/messagehub"));
             app.UseHttpsRedirection();
             app.UseMvc();
         }

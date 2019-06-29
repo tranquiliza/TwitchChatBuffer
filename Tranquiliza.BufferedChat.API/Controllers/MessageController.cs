@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Tranquiliza.BufferedChat.API.Hubs;
 using Tranquiliza.BufferedChat.Core;
 
 namespace Tranquiliza.BufferedChat.API.Controllers
@@ -38,10 +40,12 @@ namespace Tranquiliza.BufferedChat.API.Controllers
         }
 
         private readonly IChatMessageService _chatMessageService;
+        private readonly IHubContext<MessageHub> _hubContext;
 
-        public MessageController(IChatMessageService chatMessageService)
+        public MessageController(IChatMessageService chatMessageService, IHubContext<MessageHub> hubContext)
         {
             _chatMessageService = chatMessageService;
+            _hubContext = hubContext;
         }
 
         [Route("")]
@@ -58,6 +62,8 @@ namespace Tranquiliza.BufferedChat.API.Controllers
         {
             if (chatMessage == null)
                 throw new ArgumentNullException(nameof(chatMessage));
+
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", chatMessage).ConfigureAwait(false);
 
             return Ok();
         }

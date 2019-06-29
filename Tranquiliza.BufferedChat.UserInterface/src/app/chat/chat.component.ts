@@ -1,6 +1,8 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MessagesService } from '../messages.service';
 import { ChatMessage } from '../chatmessage';
+import { HubConnection } from '@aspnet/signalr';
+import * as signalR from '@aspnet/signalr';
 
 @Component({
   selector: 'app-chat',
@@ -8,8 +10,7 @@ import { ChatMessage } from '../chatmessage';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit, AfterViewInit {
-  container: HTMLElement;
-
+  private hubConnection: HubConnection;
   private regex = /[^\s]+(?!https?:\/\/static-cdn[^\s]+)|(https?:\/\/static-cdn[^\s]+)/g;
   private imageRegex = RegExp('(https?:\/\/static-cdn[^\s]+)');
 
@@ -19,6 +20,11 @@ export class ChatComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.getMessages();
+    this.hubConnection = new signalR.HubConnectionBuilder().withUrl('https://localhost:44374/messagehub').build();
+    this.hubConnection.start();
+    this.hubConnection.on('ReceiveMessage', (data: ChatMessage) => {
+      this.messages.push(data);
+    });
   }
 
   ngAfterViewInit() {
