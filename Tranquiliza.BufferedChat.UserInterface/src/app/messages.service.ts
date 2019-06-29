@@ -7,8 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MessagesService {
-  private apiUrl = 'https://localhost:44374/api/messages?channelname=tranquiliza';
-  private regex = /[^\s]+(?!https?:\/\/static-cdn[^\s]+)|(https?:\/\/static-cdn[^\s]+)/g;
+  private apiUrl = 'https://localhost:44374/api/messages?channelname=tranquiliza&pageSize=50';
 
   constructor(private http: HttpClient) { }
 
