@@ -3,36 +3,27 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tranquiliza.BufferedChat.Core
+namespace Tranquiliza.BufferedChat.Core.Domain
 {
     public class ChatMessage
     {
-        [JsonProperty("id")]
-        public Guid Id { get; set; }
+        public Guid Id { get; private set; }
 
-        [JsonProperty("receivedAt")]
-        public DateTime ReceivedAt { get; set; }
+        public DateTime ReceivedAt { get; private set; }
 
-        [JsonProperty("channel")]
-        public string Channel { get; set; }
+        public string Channel { get; private set; }
 
-        [JsonProperty("message")]
-        public string Message { get; set; }
+        public string Message { get; private set; }
 
-        [JsonProperty("username")]
-        public string Username { get; set; }
+        public string Username { get; private set; }
 
-        [JsonProperty("userColorHex")]
-        public string UserColorHex { get; set; }
+        public string UserColorHex { get; private set; }
 
-        [JsonProperty("userId")]
-        public string UserId { get; set; }
+        public string UserId { get; private set; }
 
-        [JsonProperty("emoteReplacedMessage")]
-        public string EmoteReplacedMessage { get; set; }
+        public string EmoteReplacedMessage { get; private set; }
 
-        [JsonProperty("displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName { get; private set; }
 
         [Obsolete("For serialization only", true)]
         public ChatMessage() { }

@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Tranquiliza.BufferedChat.Core.Domain;
 
 namespace Tranquiliza.BufferedChat.Core
 {

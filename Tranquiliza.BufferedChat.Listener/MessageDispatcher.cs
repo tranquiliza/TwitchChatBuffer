@@ -1,7 +1,10 @@
 ﻿using Flurl;
 using Flurl.Http;
+using System;
 using System.Threading.Tasks;
 using Tranquiliza.BufferedChat.Core;
+using Tranquiliza.BufferedChat.Core.Domain;
+using Tranquiliza.BufferedChat.Listener.Twitch;
 
 namespace Tranquiliza.BufferedChat.Listener
 {
@@ -14,11 +17,19 @@ namespace Tranquiliza.BufferedChat.Listener
             _configuration = configuration;
         }
 
-        public async Task Dispatch(ChatMessage chatMessage)
+        public async Task Dispatch(MessageReceivedEvent chatMessage)
         {
             var api = _configuration.EndPoint.AppendPathSegments("api", "messages");
 
-            await api.PostJsonAsync(chatMessage).ConfigureAwait(false);
+            try
+            {
+                await api.PostJsonAsync(chatMessage).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                throw;
+            }
         }
     }
 }

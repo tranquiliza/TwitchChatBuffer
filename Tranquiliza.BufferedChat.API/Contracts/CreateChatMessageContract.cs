@@ -1,8 +1,6 @@
-﻿using MediatR;
-
-namespace Tranquiliza.BufferedChat.Listener.Twitch
+﻿namespace Tranquiliza.BufferedChat.API.Contracts
 {
-    public class MessageReceivedEvent : INotification
+    public class CreateChatMessageContract
     {
         public string Channel { get; set; }
         public string Message { get; set; }

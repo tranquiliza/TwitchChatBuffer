@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,14 +24,14 @@ namespace Tranquiliza.BufferedChat.API
             Configuration = builder.Build();
         }
 
-        private readonly string _myAllowSpecificOrigins = "_myAllowSpecificOrigins";
+        private readonly string _cors = "CORS";
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(_myAllowSpecificOrigins,
+                options.AddPolicy(_cors,
                 builder =>
                 {
                     builder.WithOrigins("http://localhost:4200")
@@ -43,7 +42,8 @@ namespace Tranquiliza.BufferedChat.API
             });
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<DatabaseContext>(options => 
+            options.UseSqlServer(connectionString));
 
             services.AddSignalR();
 
@@ -71,7 +71,7 @@ namespace Tranquiliza.BufferedChat.API
                 app.UseHsts();
             }
 
-            app.UseCors(_myAllowSpecificOrigins);
+            app.UseCors(_cors);
 
             app.UseSignalR(route => route.MapHub<MessageHub>("/messagehub"));
             app.UseHttpsRedirection();

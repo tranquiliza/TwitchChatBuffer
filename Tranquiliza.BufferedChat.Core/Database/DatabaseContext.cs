@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Tranquiliza.BufferedChat.Core.Domain;
 
 namespace Tranquiliza.BufferedChat.Core
 {
@@ -9,8 +10,8 @@ namespace Tranquiliza.BufferedChat.Core
     {
         public DbSet<ChatMessage> ChatMessages { get; private set; }
 
-        public DatabaseContext(DbContextOptions options) : base(options)
-        {
-        }
+        public DbSet<User> Users { get; private set; }
+
+        public DatabaseContext(DbContextOptions options) : base(options) { }
     }
 }
