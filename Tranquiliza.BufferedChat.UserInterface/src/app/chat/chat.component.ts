@@ -11,9 +11,6 @@ import * as signalR from '@aspnet/signalr';
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   private hubConnection: HubConnection;
-  private regex = /[^\s]+(?!https?:\/\/static-cdn[^\s]+)|(https?:\/\/static-cdn[^\s]+)/g;
-  private imageRegex = RegExp('(https?:\/\/static-cdn[^\s]+)');
-
   constructor(private messageService: MessagesService) { }
 
   public messages: ChatMessage[] = null;

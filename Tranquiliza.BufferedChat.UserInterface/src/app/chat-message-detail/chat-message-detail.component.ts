@@ -12,6 +12,9 @@ export class ChatMessageDetailComponent implements OnInit {
   @Input() message: ChatMessage;
   constructor() { }
 
+  private regex = /[^\s]+(?!https?:\/\/static-cdn[^\s]+)|(https?:\/\/static-cdn[^\s]+)/g;
+  private imageRegex = RegExp('(https?:\/\/static-cdn[^\s]+)');
+
   readableDate = '';
 
   ngOnInit() {
