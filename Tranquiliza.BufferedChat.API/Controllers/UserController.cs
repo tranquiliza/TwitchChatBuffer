@@ -21,10 +21,14 @@ namespace Tranquiliza.BufferedChat.API.Controllers
             _userRepository = userRepository;
         }
 
+        [Route("/me")]
         [Route("/{userId}")]
         [HttpGet]
-        public async Task<IActionResult> GetUser(Guid userId)
+        public async Task<IActionResult> GetUser([FromRoute]Guid userId)
         {
+            if (userId == default(Guid))
+                return NotFound();
+
             var user = await _userRepository.GetUserAsync(userId).ConfigureAwait(false);
 
             return Ok(UserContract.Create(user));
@@ -43,7 +47,6 @@ namespace Tranquiliza.BufferedChat.API.Controllers
         public async Task<IActionResult> AddIntegration([FromRoute]Guid userId, [FromBody]IntegrationContract integration)
         {
             await _userService.AddIntegrationToUser(userId, integration.IntegrationUrl, integration.IsVisible).ConfigureAwait(false);
-
             return Ok();
         }
     }

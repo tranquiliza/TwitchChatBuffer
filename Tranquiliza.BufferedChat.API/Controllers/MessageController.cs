@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Tranquiliza.BufferedChat.API.Contracts;
 using Tranquiliza.BufferedChat.Core;
-using Tranquiliza.BufferedChat.Core.Domain;
 
 namespace Tranquiliza.BufferedChat.API.Controllers
 {

@@ -17,10 +17,7 @@ namespace Tranquiliza.BufferedChat.Core
             _databaseContext = databaseContext;
         }
 
-        public async Task AddMessage(ChatMessage chatMessage)
-        {
-            await _databaseContext.ChatMessages.AddAsync(chatMessage).ConfigureAwait(false);
-        }
+        public async Task AddMessage(ChatMessage chatMessage) => await _databaseContext.ChatMessages.AddAsync(chatMessage).ConfigureAwait(false);
 
         public async Task<IEnumerable<ChatMessage>> GetLatestMessages(string channelName, int pageSize)
         {
@@ -31,9 +28,6 @@ namespace Tranquiliza.BufferedChat.Core
                 .ToListAsync().ConfigureAwait(false);
         }
 
-        public async Task SaveChanges()
-        {
-            await _databaseContext.SaveChangesAsync().ConfigureAwait(false);
-        }
+        public async Task SaveChanges() => await _databaseContext.SaveChangesAsync().ConfigureAwait(false);
     }
 }

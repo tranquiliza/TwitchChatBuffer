@@ -20,9 +20,6 @@ namespace Tranquiliza.BufferedChat.Core.Domain
             TwitchUsername = twitchUsername;
         }
 
-        public void AddIntegration(string integrationUrl, bool isVisible)
-        {
-            Integrations.Add(new Integration(integrationUrl, isVisible));
-        }
+        public void AddIntegration(string integrationUrl, bool isVisible) => Integrations.Add(new Integration(integrationUrl, isVisible));
     }
 }

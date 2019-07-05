@@ -16,14 +16,8 @@ namespace Tranquiliza.BufferedChat.Listener
             _botMain = botMain;
         }
 
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            return _botMain.Start();
-        }
+        public Task StartAsync(CancellationToken cancellationToken) => _botMain.Start();
 
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return _botMain.Stop();
-        }
+        public Task StopAsync(CancellationToken cancellationToken) => _botMain.Stop();
     }
 }

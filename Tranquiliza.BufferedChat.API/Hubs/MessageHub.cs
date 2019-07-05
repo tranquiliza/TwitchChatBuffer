@@ -16,8 +16,6 @@ namespace Tranquiliza.BufferedChat.API.Hubs
         }
 
         public async Task SendMessage(ChatMessage chatMessage)
-        {
-            await _hubContext.Clients.All.SendAsync("ReceiveMessage", ChatMessageContract.Create(chatMessage)).ConfigureAwait(false);
-        }
+            => await _hubContext.Clients.All.SendAsync("ReceiveMessage", ChatMessageContract.Create(chatMessage)).ConfigureAwait(false);
     }
 }

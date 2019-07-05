@@ -29,9 +29,6 @@ namespace Tranquiliza.BufferedChat.Listener
             var botName = botSettings.GetValue<string>("BotUserName");
             var botOAuthToken = botSettings.GetValue<string>("BotOAuthToken");
 
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
-
             //Per Server
             var chatbotsettings = new TwitchClientSettings(botName, botOAuthToken);
             var client = new TwitchChatClient(chatbotsettings, shouldReplateEmotes: true);
