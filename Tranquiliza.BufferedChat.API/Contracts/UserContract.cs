@@ -22,6 +22,7 @@ namespace Tranquiliza.BufferedChat.API.Contracts
                 TwitchUsername = user.TwitchUsername,
                 Integrations = user.Integrations.Select(integration => new IntegrationContract
                 {
+                    Id = integration.Id,
                     IntegrationUrl = integration.IntegrationUrl,
                     IsVisible = integration.Visible
                 }).ToList()

@@ -20,6 +20,7 @@ namespace Tranquiliza.BufferedChat.Core.Services
         {
             var user = new User(twitchUsername);
             await _userRepository.CreateUserAsync(user).ConfigureAwait(false);
+            await _userRepository.SaveChanges().ConfigureAwait(false);
             return user.Id;
         }
 

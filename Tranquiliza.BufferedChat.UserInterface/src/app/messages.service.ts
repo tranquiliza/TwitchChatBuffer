@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 import { ChatMessage } from './chatmessage';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessagesService {
-  private apiUrl = 'https://localhost:44374/api/messages?channelname=tranquiliza&pageSize=50';
+  private apiEndpoint = 'api/messages?pageSize=50&channelname=';
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private apiService: ApiService) { }
 
-  public getMessages(): Observable<ChatMessage[]> {
-    return this.http.get<ChatMessage[]>(this.apiUrl);
+  public getMessages(username: string): Observable<ChatMessage[]> {
+    return this.http.get<ChatMessage[]>(this.apiService.BaseAddress() + this.apiEndpoint + username);
   }
 }

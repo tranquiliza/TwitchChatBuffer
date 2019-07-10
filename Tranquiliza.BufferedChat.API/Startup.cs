@@ -34,7 +34,7 @@ namespace Tranquiliza.BufferedChat.API
                 options.AddPolicy(_cors,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200")
+                    builder.WithOrigins("http://localhost:4200", "http://tranquiliza.dynu.net")
                            .AllowAnyHeader()
                            .AllowAnyMethod()
                            .AllowCredentials();
@@ -42,7 +42,7 @@ namespace Tranquiliza.BufferedChat.API
             });
 
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<DatabaseContext>(options => 
+            services.AddDbContext<DatabaseContext>(options =>
             options.UseSqlServer(connectionString));
 
             services.AddSignalR();
@@ -68,7 +68,8 @@ namespace Tranquiliza.BufferedChat.API
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseHsts();
+                app.UseDeveloperExceptionPage();
             }
 
             app.UseCors(_cors);

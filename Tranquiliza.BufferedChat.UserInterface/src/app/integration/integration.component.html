@@ -1,0 +1,3 @@
+<div *ngFor="let integration of integrations">
+  <iframe [ngClass]="{'col 12 visible':integration.isVisible}" class="col 12" [src]="sanitizer.bypassSecurityTrustResourceUrl(integration.integrationUrl)"></iframe>
+</div>

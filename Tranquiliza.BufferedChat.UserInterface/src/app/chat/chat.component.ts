@@ -3,6 +3,8 @@ import { MessagesService } from '../messages.service';
 import { ChatMessage } from '../chatmessage';
 import { HubConnection } from '@aspnet/signalr';
 import * as signalR from '@aspnet/signalr';
+import { ApiService } from '../api.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-chat',
@@ -11,13 +13,18 @@ import * as signalR from '@aspnet/signalr';
 })
 export class ChatComponent implements OnInit, AfterViewInit {
   private hubConnection: HubConnection;
-  constructor(private messageService: MessagesService) { }
+  constructor(
+    private messageService: MessagesService,
+    private userService: UserService,
+    private apiService: ApiService) { }
 
   public messages: ChatMessage[] = null;
 
   ngOnInit() {
-    this.getMessages();
-    this.hubConnection = new signalR.HubConnectionBuilder().withUrl('https://localhost:44374/messagehub').build();
+    this.userService.GetUser('').subscribe(output => {
+      this.getMessages(output.twitchUsername);
+    })
+    this.hubConnection = new signalR.HubConnectionBuilder().withUrl(this.apiService.BaseAddress() + 'messagehub').build();
     this.hubConnection.start();
     this.hubConnection.on('ReceiveMessage', (data: ChatMessage) => {
       this.messages.push(data);
@@ -27,22 +34,10 @@ export class ChatComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
   }
 
-  getMessages(): void {
-    this.messageService.getMessages()
+  getMessages(username: string): void {
+    this.messageService.getMessages(username)
       .subscribe(output => {
         this.messages = output.reverse();
       });
   }
-
-  addMessage(): void {
-    const newMessage = new ChatMessage();
-    newMessage.channel = 'TEST';
-    newMessage.userColorHex = '#456874';
-    newMessage.displayName = 'ILOVETESTING';
-    newMessage.message = 'Angular can do certain things to itself';
-    newMessage.receivedAt = new Date();
-
-    this.messages.push(newMessage);
-  }
-
 }

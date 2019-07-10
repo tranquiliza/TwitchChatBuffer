@@ -18,7 +18,10 @@ namespace Tranquiliza.BufferedChat.Core.Repositories
         }
 
         public async Task CreateUserAsync(User user) => await _databaseContext.Users.AddAsync(user).ConfigureAwait(false);
-        public async Task<User> GetUserAsync(Guid id) => await _databaseContext.Users.FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
+        public async Task<User> GetUserAsync(Guid id) => await _databaseContext.Users
+            .Include(x => x.Integrations)
+            .FirstOrDefaultAsync(x => x.Id == id).ConfigureAwait(false);
+
         public async Task SaveChanges() => await _databaseContext.SaveChangesAsync().ConfigureAwait(false);
     }
 }

@@ -34,6 +34,10 @@ namespace Tranquiliza.BufferedChat.Listener
             var client = new TwitchChatClient(chatbotsettings, shouldReplateEmotes: true);
             services.AddSingleton<ITwitchChatClient>(client);
 
+            var apiSettings = Configuration.GetSection("ApiSettings");
+            var apiAddress = apiSettings.GetValue<string>("ApiAddress");
+            var endpointConfig = new EndpointConfiguration(apiAddress);
+            services.AddSingleton<IEndpointConfiguration>(endpointConfig);
             services.AddSingleton<BotMain, BotMain>();
             services.AddHostedService<ServiceHost>();
 

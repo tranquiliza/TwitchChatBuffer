@@ -2,6 +2,6 @@
 {
     public interface IEndpointConfiguration
     {
-        string EndPoint { get; }
+        string ApiAddress { get; }
     }
 }

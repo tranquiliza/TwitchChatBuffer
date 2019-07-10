@@ -6,6 +6,11 @@ namespace Tranquiliza.BufferedChat.Listener
 {
     public class EndpointConfiguration : IEndpointConfiguration
     {
-        public string EndPoint => "https://localhost:44374/";
+        public string ApiAddress { get; private set; }
+
+        public EndpointConfiguration(string apiAddress = "https://localhost:44374/")
+        {
+            ApiAddress = apiAddress;
+        }
     }
 }

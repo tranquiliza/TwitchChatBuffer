@@ -1,4 +1,3 @@
-<button (click)="addMessage()">Click Me!</button>
 <div class="container-fluid">
     <div #scrollMe [scrollTop]="scrollMe.scrollHeight" class="chat-container">
         <app-chat-message-detail *ngFor='let message of messages' [message]="message"></app-chat-message-detail>

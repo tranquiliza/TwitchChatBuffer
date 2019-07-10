@@ -19,7 +19,7 @@ namespace Tranquiliza.BufferedChat.Listener
 
         public async Task Dispatch(MessageReceivedEvent chatMessage)
         {
-            var api = _configuration.EndPoint.AppendPathSegments("api", "messages");
+            var api = _configuration.ApiAddress.AppendPathSegments("api", "messages");
 
             try
             {
